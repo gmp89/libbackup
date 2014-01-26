@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/22 13:11:01 by wbeets            #+#    #+#             */
-/*   Updated: 2013/12/04 11:26:39 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:43:52 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:43:52 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,18 @@
 
 void	*ft_memmove(void *s1, const void *s2, size_t n)
 {
-	char	*copy;
-	char	*p1;
 	size_t	i;
 
-	copy = (char *)malloc(sizeof(char)*n);
-	p1 = (char *)s1;
-	i = 0;
-	while (i < n)
+	if (!((int *) s1 > (int *) s2 && (int *) s2 + n > (int *) s1))
+		ft_memcpy(s1, s2, n);
+	else
 	{
-		copy[i] = ((char *)s2)[i];
-		i++;
-	}
-	while (n > 0)
-	{
-		n--;
-		p1[n] = copy[n];
+		i = n;
+		while (i > 0)
+		{
+			i--;
+			*((char *) s1 + i) = *((char *) s2 + i);
+		}
 	}
 	return (s1);
 }

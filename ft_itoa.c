@@ -3,50 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/27 13:19:45 by wbeets            #+#    #+#             */
-/*   Updated: 2013/12/04 11:32:06 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:43:50 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:43:50 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_nb_count(int n, int i)
+static char		*ispos(int n, char *nb, char *rnb)
 {
-	while (n > 9 || n < 0)
+	int		i;
+	int		j;
+
+	i = 0;
+	while (n)
+		{
+			nb[i] = (n % 10) + 48;
+			n = n / 10;
+			i++;
+		}
+		nb[i] = 0;
+		i = 0;
+		j = ft_strlen(nb) - 1;
+		while (j >= 0)
+		{
+			rnb[i] = nb[j];
+			i++;
+			j--;
+		}
+		rnb[i] = 0;
+		free(nb);
+		return (rnb);
+}
+
+static char		*isneg(int n, char *nb, char *rnb)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	n = n * -1;
+	while (n)
 	{
+		nb[i] = n % 10 + 48;
+		n = n / 10;
 		i++;
-		n /= 10;
 	}
-	return (i);
+	nb[i++] = '-';
+	nb[i++] = 0;
+	i = 0;
+	j = ft_strlen(nb);
+	while (j >= 0)
+	{
+		rnb[i] = nb[--j];
+		i++;
+	}
+	rnb[i] = 0;
+	free(nb);
+	return (rnb);
 }
 
 char		*ft_itoa(int n)
 {
-	char	*nbstr;
-	char	*nbcut;
-	int		nblen;
-	int		nb;
-	int		i;
+	char	*nb;
+	int	i;
+	char	*rnb;
 
-	nblen = (n < 0) ? 2 : 1;
-	nb = n;
-	i = ft_nb_count(n, nblen);
-	nbcut = ft_strnew(i + 1);
-	while (i > 0)
+	i = 0;
+	nb = (char *)malloc(sizeof(char) * 12);
+	rnb = (char *)malloc(sizeof(char) * 12);
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	if (n >= 0 && n < 10)
 	{
-		if (n >= 0)
-			nbcut[i - 1] = ((char)((nb % 10) + 48));
-		if (n < 0 && i >= 2)
-			nbcut[i - 2] = ((char)(48 - (nb % 10)));
-		i--;
-		nb /= 10;
+		nb[0] = n + 48;
+		nb[1] = '\0';
+		free(rnb);
+		return (nb);
 	}
+	if (n > 9)
+		return (ispos(n, nb, rnb));
 	if (n < 0)
-		nbcut[i] = '-';
-	nbstr = ft_strnew(ft_nb_count(n, nblen) + 1);
-	ft_strcpy(nbstr, nbcut);
-	free(nbcut);
-	return (nbstr);
+		return (isneg(n, nb, rnb));
+	return (NULL);
 }

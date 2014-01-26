@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 18:28:23 by wbeets            #+#    #+#             */
-/*   Updated: 2013/12/04 11:36:43 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:43:38 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:43:41 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int		ft_atoi(char *str)
 {
-	int	sign;
-	int	nb;
+	int		is_neg;
+	int		val;
 
-	sign = 1;
-	nb = 0;
-	while (*str == ' ' || *str == '\n' || *str == '\v'
-			|| *str == '\t' || *str == '\r' || *str == '\f')
-		++str;
+	is_neg = 0;
+	val = 0;
+	while ((*str == '\t') || (*str == '\v')
+			|| (*str == '\n') || (*str == '\r')
+			|| (*str == '\f') || (*str == ' '))
+		str++;
 	if (*str == '-')
 	{
-		sign = -1;
-		++str;
+		is_neg = 1;
+		str++;
 	}
 	else if (*str == '+')
-		++str;
-	while (*str >= '0' && *str <= '9')
+		str++;
+	while (ft_isdigit(*str))
 	{
-		nb = nb * 10;
-		nb = nb + (*str - '0');
-		++str;
+			val = (val * 10) + (*str - 48) % 10;
+			str++;
 	}
-	return (sign * nb);
+	return (val = is_neg ? val * -1 : val);
 }

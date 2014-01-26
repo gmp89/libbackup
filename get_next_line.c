@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/03 15:21:39 by wbeets            #+#    #+#             */
-/*   Updated: 2013/12/08 17:55:53 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:44:07 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:44:14 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 int		get_next_line(int const fd, char ** line)
 {
 	static char		*buf = "";
-	size_t			i;
 	int				ret;
 	char			*str;
 
 	if (!line || fd < 0)
 		return (-1);
-	i = 0;
 	ret = 1;
 	if (buf[0] == '\0')
 		buf = ft_strnew(0);
@@ -36,7 +34,6 @@ int		get_next_line(int const fd, char ** line)
 		}
 		buf = biggerbuf(fd, buf, &ret);
 	}
-	free(buf);
 	return (ret);
 }
 

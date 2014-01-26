@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/20 20:52:40 by wbeets            #+#    #+#             */
-/*   Updated: 2013/11/21 15:58:16 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:44:05 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:44:05 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,20 @@
 
 char	*ft_strstr(const char *s1, const char *s2)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
-	j = 0;
-	if (s2[i] == '\0')
-		return (char*)(s1);
-	while (s1[i] != '\0')
+	if (!*s2)
+		return ((char *)s1);
+	while (s1[i])
 	{
-		while (s1[i] == s2[j])
-		{
-			j++;
-			i++;
-			if (s2[j] == '\0')
-				return (char*)&(s1[i-ft_strlen(s2)]);
-		}
 		j = 0;
+		while (s1[i + j] == s2[j] && s1[i + j] && s2[j])
+			j++;
+		if (!s2[j])
+			return ((char *)&s1[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }

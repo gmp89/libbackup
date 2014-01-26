@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/27 10:35:44 by wbeets            #+#    #+#             */
-/*   Updated: 2013/11/29 12:22:57 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:44:00 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:44:00 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
-	int		j;
-	char	*str;
+	int		strlen;
+	char	*tmp;
 
-	if (s1 && s2)
+	strlen = (ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
+	tmp = (char *)malloc(sizeof(*tmp) * (strlen));
+	i = 0;
+	if (tmp)
 	{
-		i = ft_strlen(s1);
-		j = ft_strlen(s2);
-
-		str = ft_memalloc((i + j) * sizeof(str));
-		j = 0;
-		ft_strcpy(str, s1);
-		ft_strcat(str, s2);
-		return (str);
+		while (*s1)
+			tmp[i++] = *s1++;
+		while (*s2)
+			tmp[i++] = *s2++;
+		tmp[i] = '\0';
+		return (tmp);
 	}
-	return (0);
+	return (NULL);
 }

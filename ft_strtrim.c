@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/27 10:57:11 by wbeets            #+#    #+#             */
-/*   Updated: 2013/12/04 11:01:17 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:44:06 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:44:06 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 char	*ft_strtrim(char const *s)
 {
-	char	*newmem;
+	int		i;
+	int		j;
+	int		k;
 	char	*tmp;
-	char	*pend;
-	size_t	i;
 
-	tmp = ft_strnew(ft_strlen(s) + 1);
-	pend = (char *)s + (ft_strlen(s) - 1);
-	i = 0;
-	while (*s == ' ' || *s == '\n' || *s == '\t')
-		s++;
-	while (*pend == ' ' || *pend == '\n' || *pend == '\t')
-		pend--;
-	while (s <= pend)
+	if (s)
 	{
-		tmp[i] = *s;
-		i++;
-		s++;
+		i = 0;
+		j = ft_strlen((char *) s) - 1;
+		while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+			i++;
+		tmp = (char *)malloc(sizeof(char) * (j - i + 1));
+		while (s[j] == ' ' || s[j] == '\n' || s[j] == '\t')
+			j--;
+		k = 0;
+		while (i <= j)
+		{
+			tmp[k] = s[i];
+			i++;
+			k++;
+		}
+		tmp[k] = '\0';
+		return (tmp);
 	}
-	tmp[i] = '\0';
-	newmem = ft_strnew(ft_strlen(tmp));
-	ft_strcpy(newmem, tmp);
-	ft_strdel(&tmp);
-	return (newmem);
+	return (NULL);
 }

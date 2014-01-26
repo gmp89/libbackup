@@ -1,12 +1,12 @@
-/*e************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wbeets <wbeets@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gpetrov <gpetrov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 10:13:23 by wbeets            #+#    #+#             */
-/*   Updated: 2013/12/04 11:24:43 by wbeets           ###   ########.fr       */
+/*   Created: 2013/12/22 18:44:03 by gpetrov           #+#    #+#             */
+/*   Updated: 2013/12/22 18:44:03 by gpetrov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
-	size_t	length;
+	int		i;
+	int		j;
 
-	length = ft_strlen(s2);
-	if (!*s2)
+	if (ft_strlen((char *)s2) == 0)
 		return ((char *)s1);
-	if (length <= n)
+	if (ft_strlen((char *)s2) > (int)n)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i] && n > 0)
 	{
-		while (*s1 && n - length + 1 > 0)
+		while ((s1[i] == s2[j]) && (s2[j]))
 		{
-			if (*s1 == *s2)
-			{
-				if (ft_memcmp((char *)s1, (char *)s2, length) == 0)
-					return ((char *)s1);
-			}
-			s1++;
-			n--;
+			i++;
+			j++;
 		}
+		if (ft_strlen((char *)s2) == j)
+			return ((char *)(s1 + i - j));
+		else
+			i = i - j + 1;
+		j = 0;
+		n--;
 	}
 	return (NULL);
 }
